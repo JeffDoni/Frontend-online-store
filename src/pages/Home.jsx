@@ -21,7 +21,7 @@ export default class Home extends Component {
     const { pesquisar } = this.state;
     const product = await getProductsFromCategoryAndQuery('', pesquisar);
     this.setState({
-      list: product,
+      list: product.results,
     });
   };
 
