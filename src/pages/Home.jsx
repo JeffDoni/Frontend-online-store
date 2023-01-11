@@ -7,6 +7,7 @@ export default class Home extends Component {
     category: [],
     pesquisar: '',
     list: [],
+    selectId: '',
   };
 
   async componentDidMount() {
@@ -15,6 +16,19 @@ export default class Home extends Component {
       category: list,
     });
   }
+
+  handleChange = ({ target: { value } }) => {
+    this.setState({
+      selectId: value,
+
+    }, async () => {
+      const { selectId, pesquisar } = this.state;
+      const product = await getProductsFromCategoryAndQuery(selectId, pesquisar);
+      this.setState({
+        list: product.results,
+      });
+    });
+  };
 
   handleClick = async (event) => {
     event.preventDefault();
@@ -33,13 +47,14 @@ export default class Home extends Component {
           {category.map((e) => (
 
             <label htmlFor={ e.id } data-testid="category" key={ e.id }>
-              {e.name}
               <input
                 type="radio"
                 id={ e.id }
-                value={ e.name }
+                value={ e.id }
                 name="category"
+                onChange={ this.handleChange }
               />
+              {e.name}
             </label>
           ))}
         </form>
