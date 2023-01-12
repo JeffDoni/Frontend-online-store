@@ -43,6 +43,7 @@ export default class Home extends Component {
     const { category, pesquisar, list } = this.state;
     return (
       <div>
+        <Link to="/cart"> Cart </Link>
         <form>
           {category.map((e) => (
 
