@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
+import ProductCard from '../../components/ProductCard';
 // import PropTypes from 'prop-types'
 // import styles from './style.module.css';
+import getItemsLocalStorage from '../../services/localStorage';
 import tempLocal from '../../services/tempLocal.json';
 
 export default class CartPage extends Component {
+  state = {
+    cartItems: [],
+  };
+
   componentDidMount() {
     localStorage.setItem('cartItems', JSON.stringify(tempLocal));
+    const getCartItems = getItemsLocalStorage();
+    this.setState({ cartItems: getCartItems });
   }
 
   render() {
+    const { cartItems } = this.state;
     return (
       <div>
-        <h1>carrinho</h1>
+        <ul>
+          { cartItems.map((item) => <ProductCard key={ item.id } product={ item } />) }
+        </ul>
       </div>
     );
   }
