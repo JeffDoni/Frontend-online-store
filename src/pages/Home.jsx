@@ -96,22 +96,23 @@ export default class Home extends Component {
             to="/detailsProduct"
             onClick={ () => this.captureId(e.id) }
           >
-          <div data-testid="product">
-            <p>{e.title}</p>
-            <img src={ e.thumbnail } alt={ e.title } />
-            <p>{e.price}</p>
-            <button
-              type="button"
-              data-testid="product-add-to-cart"
-              onClick={ () => {
-                const currentCart = JSON.parse(localStorage.getItem('cartProduct')) || [];
-                const newCart = [...currentCart, e];
-                localStorage.setItem('cartProduct', JSON.stringify(newCart));
-              } }
-            >
-              Adicionar ao carrinho
-            </button>
-          </div>
+            <div data-testid="product">
+              <p>{e.title}</p>
+              <img src={ e.thumbnail } alt={ e.title } />
+              <p>{e.price}</p>
+              <button
+                type="button"
+                data-testid="product-add-to-cart"
+                onClick={ () => {
+                  const currentCart = JSON
+                    .parse(localStorage.getItem('cartProduct')) || [];
+                  const newCart = [...currentCart, e];
+                  localStorage.setItem('cartProduct', JSON.stringify(newCart));
+                } }
+              >
+                Adicionar ao carrinho
+              </button>
+            </div>
           </Link>
         ))}
       </div>
