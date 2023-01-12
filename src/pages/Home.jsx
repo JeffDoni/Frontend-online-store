@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { getCategories,
+  getProductsFromCategoryAndQuery } from '../services/api';
 
 export default class Home extends Component {
   state = {
@@ -37,6 +38,10 @@ export default class Home extends Component {
     this.setState({
       list: product.results,
     });
+  };
+
+  captureId = (id) => {
+    localStorage.setItem('detailsId', JSON.stringify(id));
   };
 
   render() {
@@ -85,7 +90,13 @@ export default class Home extends Component {
         </p>
         {list.length === 0 && <p>Nenhum produto foi encontrado</p> }
         {list.map((e) => (
-          <div key={ e.id } data-testid="product">
+          <Link
+            key={ e.id }
+            data-testid="product-detail-link"
+            to="/detailsProduct"
+            onClick={ () => this.captureId(e.id) }
+          >
+          <div data-testid="product">
             <p>{e.title}</p>
             <img src={ e.thumbnail } alt={ e.title } />
             <p>{e.price}</p>
@@ -101,7 +112,7 @@ export default class Home extends Component {
               Adicionar ao carrinho
             </button>
           </div>
-
+          </Link>
         ))}
       </div>
     );
