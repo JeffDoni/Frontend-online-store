@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { getProductById } from '../services/api';
 
 export default class DetailsProduct extends Component {
+  state = {
+    productID: {},
+  };
+
+  async componentDidMount() {
+    const id = JSON.parse(localStorage.getItem('detailsId'));
+    const details = await getProductById(id);
+    console.log('testand', details);
+    this.setState({
+      productID: details,
+    });
+  }
+
   render() {
-    const { detailsId } = this.props;
+    const { productID } = this.state;
     return (
       <div>
-        {detailsId.map((e) => (
-
-          <div key={ e.id } data-testid="product">
-            <p>{e.title}</p>
-            <img src={ e.thumbnail } alt={ e.title } />
-            <p>{e.price}</p>
-          </div>
-
-        ))}
+        <Link to="/shoppingCart" data-testid="shopping-cart-button">
+          Carrinho de compras
+        </Link>
+        <div data-testid="product">
+          <p data-testid="product-detail-name">{productID.title}</p>
+          <img
+            src={ productID.thumbnail }
+            alt={ productID.title }
+            data-testid="product-detail-image"
+          />
+          <p data-testid="product-detail-price">{productID.price}</p>
+        </div>
       </div>
     );
   }
 }
-
-DetailsProduct.propTypes = {
-  detailsId: PropTypes.arrayOf(
-    propTypes.string,
-  ),
-}.isRequired;

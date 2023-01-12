@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories,
-  getProductById,
   getProductsFromCategoryAndQuery } from '../services/api';
-import DetailsProduct from './DetailsProduct';
 
 export default class Home extends Component {
   state = {
@@ -11,7 +9,6 @@ export default class Home extends Component {
     pesquisar: '',
     list: [],
     selectId: '',
-    detailsId: [],
   };
 
   async componentDidMount() {
@@ -44,14 +41,11 @@ export default class Home extends Component {
   };
 
   captureId = (id) => {
-    const details = getProductById(id);
-    this.setState({
-      detailsId: details,
-    });
+    localStorage.setItem('detailsId', JSON.stringify(id));
   };
 
   render() {
-    const { category, pesquisar, list, detailsId } = this.state;
+    const { category, pesquisar, list } = this.state;
     return (
       <div>
         <form>
@@ -95,11 +89,11 @@ export default class Home extends Component {
         {list.map((e) => (
           <Link
             key={ e.id }
-            data-testid="product"
+            data-testid="product-detail-link"
             to="/detailsProduct"
             onClick={ () => this.captureId(e.id) }
           >
-            <div>
+            <div data-testid="product">
               <p>{e.title}</p>
               <img src={ e.thumbnail } alt={ e.title } />
               <p>{e.price}</p>
@@ -110,7 +104,6 @@ export default class Home extends Component {
         <Link to="/shoppingCart" data-testid="shopping-cart-button">
           Carrinho de compras
         </Link>
-        <DetailsProduct detailsId={ detailsId } />
       </div>
     );
   }
