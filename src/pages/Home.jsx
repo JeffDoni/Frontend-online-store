@@ -90,30 +90,32 @@ export default class Home extends Component {
         </p>
         {list.length === 0 && <p>Nenhum produto foi encontrado</p> }
         {list.map((e) => (
-          <Link
-            key={ e.id }
-            data-testid="product-detail-link"
-            to="/detailsProduct"
-            onClick={ () => this.captureId(e.id) }
-          >
-            <div data-testid="product">
-              <p>{e.title}</p>
-              <img src={ e.thumbnail } alt={ e.title } />
-              <p>{e.price}</p>
-              <button
-                type="button"
-                data-testid="product-add-to-cart"
-                onClick={ () => {
-                  const currentCart = JSON
-                    .parse(localStorage.getItem('cartProduct')) || [];
-                  const newCart = [...currentCart, e];
-                  localStorage.setItem('cartProduct', JSON.stringify(newCart));
-                } }
-              >
-                Adicionar ao carrinho
-              </button>
-            </div>
-          </Link>
+          <div key={ e.id }>
+            <Link
+              data-testid="product-detail-link"
+              to="/detailsProduct"
+              onClick={ () => this.captureId(e.id) }
+            >
+              <div data-testid="product">
+                <p>{e.title}</p>
+                <img src={ e.thumbnail } alt={ e.title } />
+                <p>{e.price}</p>
+
+              </div>
+            </Link>
+            <button
+              type="button"
+              data-testid="product-add-to-cart"
+              onClick={ () => {
+                const currentCart = JSON
+                  .parse(localStorage.getItem('cartProduct')) || [];
+                const newCart = [...currentCart, e];
+                localStorage.setItem('cartProduct', JSON.stringify(newCart));
+              } }
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
         ))}
       </div>
     );
