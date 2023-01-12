@@ -43,7 +43,9 @@ export default class Home extends Component {
     const { category, pesquisar, list } = this.state;
     return (
       <div>
-        <Link to="/cart"> Cart </Link>
+        <Link to="/shoppingCart" data-testid="shopping-cart-button">
+          Carrinho de compras
+        </Link>
         <form>
           {category.map((e) => (
 
@@ -87,12 +89,20 @@ export default class Home extends Component {
             <p>{e.title}</p>
             <img src={ e.thumbnail } alt={ e.title } />
             <p>{e.price}</p>
+            <button
+              type="button"
+              data-testid="product-add-to-cart"
+              onClick={ () => {
+                const currentCart = JSON.parse(localStorage.getItem('cartProduct')) || [];
+                const newCart = [...currentCart, e];
+                localStorage.setItem('cartProduct', JSON.stringify(newCart));
+              } }
+            >
+              Adicionar ao carrinho
+            </button>
           </div>
 
         ))}
-        <Link to="/shoppingCart" data-testid="shopping-cart-button">
-          Carrinho de compras
-        </Link>
       </div>
     );
   }

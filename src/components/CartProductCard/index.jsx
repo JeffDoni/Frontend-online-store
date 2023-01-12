@@ -26,7 +26,7 @@ export default class CartProductCard extends Component {
           />
         </button>
         <img className={ styles.thumb } src={ product.thumbnail } alt={ product.title } />
-        <h3>{product.title}</h3>
+        <h3 data-testid="shopping-cart-product-name">{product.title}</h3>
         <div className={ styles.itemUnity }>
           <button
             type="button"
@@ -43,7 +43,7 @@ export default class CartProductCard extends Component {
           >
             -
           </button>
-          <h4>{unity <= 1 ? 1 : unity}</h4>
+          <h4 data-testid="shopping-cart-product-quantity">{unity <= 1 ? 1 : unity}</h4>
           <button
             type="button"
             data-testid="product-increase-quantity"

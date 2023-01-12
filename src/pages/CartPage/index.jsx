@@ -1,38 +1,37 @@
 import React, { Component } from 'react';
 import CartProductCard from '../../components/CartProductCard';
-// import PropTypes from 'prop-types'
 // import styles from './style.module.css';
 import getItemsLocalStorage from '../../services/localStorage';
-import tempLocal from '../../services/tempLocal.json';
 
 export default class CartPage extends Component {
   state = {
-    cartItems: [],
+    cartItems: getItemsLocalStorage() || [],
   };
-
-  componentDidMount() {
-    localStorage.setItem('cartItems', JSON.stringify(tempLocal));
-    const getCartItems = getItemsLocalStorage();
-    this.setState({ cartItems: getCartItems });
-  }
 
   render() {
     const { cartItems } = this.state;
     return (
       <div>
         <ul>
-          { cartItems.map((item) => (
-            <CartProductCard
-              key={ item.id }
-              removeItem={ () => {
-                const temp = cartItems.filter((item2) => item2.id !== item.id);
-                this.setState({ cartItems: temp });
-              } }
-              product={ item }
-            />
-          )) }
+          { cartItems.length === 0 ? (
+            <li data-testid="shopping-cart-empty-message">Seu carrinho está vazio</li>
+          ) : (
+            cartItems.map((item) => (
+              <CartProductCard
+                key={ item.id }
+                removeItem={ () => {
+                  const currentCart = getItemsLocalStorage();
+                  const temp = currentCart.filter((item2) => item2.id !== item.id);
+                  localStorage.setItem('cartProduct', JSON.stringify(temp));
+                  this.setState({ cartItems: getItemsLocalStorage() });
+                } }
+                product={ item }
+              />
+            ))
+          ) }
         </ul>
       </div>
+
     );
   }
 }
