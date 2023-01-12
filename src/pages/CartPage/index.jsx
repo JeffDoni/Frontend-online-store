@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductCard from '../../components/ProductCard';
+import CartProductCard from '../../components/CartProductCard';
 // import PropTypes from 'prop-types'
 // import styles from './style.module.css';
 import getItemsLocalStorage from '../../services/localStorage';
@@ -21,7 +21,9 @@ export default class CartPage extends Component {
     return (
       <div>
         <ul>
-          { cartItems.map((item) => <ProductCard key={ item.id } product={ item } />) }
+          { cartItems.map((item) => (
+            <CartProductCard key={ item.id } product={ item } />
+          )) }
         </ul>
       </div>
     );
