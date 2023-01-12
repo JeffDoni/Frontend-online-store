@@ -32,17 +32,17 @@ export default class DetailsProduct extends Component {
           />
           <p data-testid="product-detail-price">{productID.price}</p>
           <button
-              type="button"
-              data-testid="product-add-to-cart"
-              onClick={ () => {
-                const currentCart = JSON
-                  .parse(localStorage.getItem('cartProduct')) || [];
-                const newCart = [...currentCart, e];
-                localStorage.setItem('cartProduct', JSON.stringify(newCart));
-              } }
-            >
-              Adicionar ao carrinho
-            </button>
+            type="button"
+            data-testid="product-detail-add-to-cart"
+            onClick={ () => {
+              const currentCart = JSON
+                .parse(localStorage.getItem('cartProduct')) || [];
+              const newCart = [...currentCart, productID];
+              localStorage.setItem('cartProduct', JSON.stringify(newCart));
+            } }
+          >
+            Adicionar ao carrinho
+          </button>
         </div>
       </div>
     );
