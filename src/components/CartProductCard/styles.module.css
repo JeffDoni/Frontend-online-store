@@ -1,0 +1,33 @@
+.card {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.thumb {
+  width: 90px;
+}
+
+.itemUnity {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+h3 {
+  width: 600px;
+}
+
+.removeButton {
+  background: none;
+  border: none;
+}
+
+.removeButton:hover {
+  cursor: pointer;
+}
+
+.removeButton img {
+  width: 20px;
+}
