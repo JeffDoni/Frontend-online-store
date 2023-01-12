@@ -22,7 +22,14 @@ export default class CartPage extends Component {
       <div>
         <ul>
           { cartItems.map((item) => (
-            <CartProductCard key={ item.id } product={ item } />
+            <CartProductCard
+              key={ item.id }
+              removeItem={ () => {
+                const temp = cartItems.filter((item2) => item2.id !== item.id);
+                this.setState({ cartItems: temp });
+              } }
+              product={ item }
+            />
           )) }
         </ul>
       </div>

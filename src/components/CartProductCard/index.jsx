@@ -1,6 +1,7 @@
 import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import styles from './styles.module.css';
+import removeButton from '../../assets/removeButton.png';
 
 export default class CartProductCard extends Component {
   state = {
@@ -9,11 +10,22 @@ export default class CartProductCard extends Component {
   };
 
   render() {
-    const { product } = this.props;
+    const { product, removeItem } = this.props;
     const { unity, isDisabled } = this.state;
     return (
       <li className={ styles.card }>
-        <img src={ product.thumbnail } alt={ product.title } />
+        <button
+          data-testid="remove-product"
+          className={ styles.removeButton }
+          onClick={ removeItem }
+          type="button"
+        >
+          <img
+            src={ removeButton }
+            alt="remover item"
+          />
+        </button>
+        <img className={ styles.thumb } src={ product.thumbnail } alt={ product.title } />
         <h3>{product.title}</h3>
         <div className={ styles.itemUnity }>
           <button
@@ -55,4 +67,5 @@ CartProductCard.propTypes = {
     thumbnail: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
   }).isRequired,
+  removeItem: propTypes.func.isRequired,
 };
