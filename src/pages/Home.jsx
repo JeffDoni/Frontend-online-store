@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { getCategories,
+  getProductById,
+  getProductsFromCategoryAndQuery } from '../services/api';
+import DetailsProduct from './DetailsProduct';
 
 export default class Home extends Component {
   state = {
@@ -8,6 +11,7 @@ export default class Home extends Component {
     pesquisar: '',
     list: [],
     selectId: '',
+    detailsId: [],
   };
 
   async componentDidMount() {
@@ -39,8 +43,15 @@ export default class Home extends Component {
     });
   };
 
+  captureId = (id) => {
+    const details = getProductById(id);
+    this.setState({
+      detailsId: details,
+    });
+  };
+
   render() {
-    const { category, pesquisar, list } = this.state;
+    const { category, pesquisar, list, detailsId } = this.state;
     return (
       <div>
         <form>
@@ -82,16 +93,24 @@ export default class Home extends Component {
         </p>
         {list.length === 0 && <p>Nenhum produto foi encontrado</p> }
         {list.map((e) => (
-          <div key={ e.id } data-testid="product">
-            <p>{e.title}</p>
-            <img src={ e.thumbnail } alt={ e.title } />
-            <p>{e.price}</p>
-          </div>
+          <Link
+            key={ e.id }
+            data-testid="product"
+            to="/detailsProduct"
+            onClick={ () => this.captureId(e.id) }
+          >
+            <div>
+              <p>{e.title}</p>
+              <img src={ e.thumbnail } alt={ e.title } />
+              <p>{e.price}</p>
+            </div>
+          </Link>
 
         ))}
         <Link to="/shoppingCart" data-testid="shopping-cart-button">
           Carrinho de compras
         </Link>
+        <DetailsProduct detailsId={ detailsId } />
       </div>
     );
   }
