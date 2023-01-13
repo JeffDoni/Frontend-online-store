@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 
 export default class DetailsProduct extends Component {
@@ -8,7 +9,8 @@ export default class DetailsProduct extends Component {
   };
 
   async componentDidMount() {
-    const id = JSON.parse(localStorage.getItem('detailsId'));
+    const { match: { params: { id } } } = this.props;
+    console.log(id);
     const details = await getProductById(id);
     console.log('testand', details);
     this.setState({
@@ -48,3 +50,11 @@ export default class DetailsProduct extends Component {
     );
   }
 }
+
+DetailsProduct.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
+}.isRequired;
