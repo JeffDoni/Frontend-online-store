@@ -35,6 +35,7 @@ export default class CartPage extends Component {
             ))
           ) }
         </ul>
+        <Link to="/checkout" data-testid="checkout-products">Finalizar a compra</Link>
       </div>
 
     );
