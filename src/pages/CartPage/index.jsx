@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import CartProductCard from '../../components/CartProductCard';
 // import styles from './style.module.css';
 import getItemsLocalStorage from '../../services/localStorage';
@@ -12,6 +13,10 @@ export default class CartPage extends Component {
     const { cartItems } = this.state;
     return (
       <div>
+        <Link to="/">Home</Link>
+        <Link to="/shoppingCart" data-testid="shopping-cart-button">
+          Carrinho de compras
+        </Link>
         <ul>
           { cartItems.length === 0 ? (
             <li data-testid="shopping-cart-empty-message">Seu carrinho está vazio</li>
