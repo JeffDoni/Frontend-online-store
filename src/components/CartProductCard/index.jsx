@@ -2,18 +2,12 @@ import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import styles from './styles.module.css';
 import removeButton from '../../assets/removeButton.png';
+import UnityProductChanger from '../UnityProductChanger';
 
 export default class CartProductCard extends Component {
-  state = {
-    unity: 1,
-    isDisabled: true,
-  };
-
   render() {
     const { product, removeItem, removeLocalStorage,
       addQuantityLocalStorage } = this.props;
-    const { unity, isDisabled } = this.state;
-
     return (
       <li className={ styles.card }>
         <button
@@ -29,37 +23,11 @@ export default class CartProductCard extends Component {
         </button>
         <img className={ styles.thumb } src={ product.thumbnail } alt={ product.title } />
         <h3 data-testid="shopping-cart-product-name">{product.title}</h3>
-        <div className={ styles.itemUnity }>
-          <button
-            type="button"
-            data-testid="product-decrease-quantity"
-            disabled={ isDisabled }
-            onClick={ () => {
-              if (unity < 2) {
-                this.setState({ isDisabled: true });
-                this.setState({ unity: 1 });
-              } else {
-                this.setState({ unity: unity - 1 });
-                removeLocalStorage();
-              }
-            } }
-          >
-            -
-          </button>
-          <h4 data-testid="shopping-cart-product-quantity">{unity <= 1 ? 1 : unity}</h4>
-          <button
-            type="button"
-            data-testid="product-increase-quantity"
-            onClick={ () => {
-              this.setState({ unity: unity + 1 });
-              this.setState({ isDisabled: false });
-              addQuantityLocalStorage();
-            } }
-          >
-            +
-          </button>
-          <h4>{product.price * unity}</h4>
-        </div>
+        <UnityProductChanger
+          product={ product }
+          removeLocalStorage={ removeLocalStorage }
+          addQuantityLocalStorage={ addQuantityLocalStorage }
+        />
       </li>
     );
   }
@@ -70,6 +38,7 @@ CartProductCard.propTypes = {
     title: propTypes.string.isRequired,
     thumbnail: propTypes.string.isRequired,
     price: propTypes.number.isRequired,
+    available_quantity: propTypes.number.isRequired,
   }).isRequired,
   removeItem: propTypes.func.isRequired,
   removeLocalStorage: propTypes.func.isRequired,

@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CartProductCard from '../../components/CartProductCard';
 // import styles from './style.module.css';
-import getItemsLocalStorage,
-{ getAllCartItemsLocalStorage } from '../../services/localStorage';
+import
+{ addItemLocalStorage,
+  getItemsLocalStorage,
+  getAllCartItemsLocalStorage } from '../../services/localStorage';
 
 export default class CartPage extends Component {
   state = {
-    cartItems: getItemsLocalStorage() || [],
+    cartItems: getItemsLocalStorage('cartProduct') || [],
     quantityItensCart: getAllCartItemsLocalStorage() || [],
   };
 
@@ -28,10 +30,10 @@ export default class CartPage extends Component {
               <CartProductCard
                 key={ item.id }
                 removeItem={ () => {
-                  const currentCart = getItemsLocalStorage();
+                  const currentCart = getItemsLocalStorage('cartProduct');
                   const temp = currentCart.filter((_item2, index2) => index2 !== index);
-                  localStorage.setItem('cartProduct', JSON.stringify(temp));
-                  this.setState({ cartItems: getItemsLocalStorage() });
+                  addItemLocalStorage('cartProduct', temp);
+                  this.setState({ cartItems: getItemsLocalStorage('cartProduct') });
 
                   const allCartProducts = getAllCartItemsLocalStorage();
                   const temp2 = allCartProducts.filter((_item3, index3) => (
