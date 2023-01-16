@@ -115,7 +115,7 @@ export default class DetailsProduct extends Component {
 
               const allCartProducts = JSON
                 .parse(localStorage.getItem('allCartProducts')) || [];
-              const newOtherCart = [...allCartProducts, item];
+              const newOtherCart = [...allCartProducts, productID];
               localStorage.setItem('allCartProducts', JSON.stringify(newOtherCart));
               this.setState({ quantityItensCart: getAllCartItemsLocalStorage() });
             } }
