@@ -10,8 +10,10 @@ export default class CartProductCard extends Component {
   };
 
   render() {
-    const { product, removeItem } = this.props;
+    const { product, removeItem, removeLocalStorage,
+      addQuantityLocalStorage } = this.props;
     const { unity, isDisabled } = this.state;
+
     return (
       <li className={ styles.card }>
         <button
@@ -38,6 +40,7 @@ export default class CartProductCard extends Component {
                 this.setState({ unity: 1 });
               } else {
                 this.setState({ unity: unity - 1 });
+                removeLocalStorage();
               }
             } }
           >
@@ -50,6 +53,7 @@ export default class CartProductCard extends Component {
             onClick={ () => {
               this.setState({ unity: unity + 1 });
               this.setState({ isDisabled: false });
+              addQuantityLocalStorage();
             } }
           >
             +
@@ -68,4 +72,6 @@ CartProductCard.propTypes = {
     price: propTypes.number.isRequired,
   }).isRequired,
   removeItem: propTypes.func.isRequired,
+  removeLocalStorage: propTypes.func.isRequired,
+  addQuantityLocalStorage: propTypes.func.isRequired,
 };
