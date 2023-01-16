@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories,
   getProductsFromCategoryAndQuery } from '../services/api';
+import { getAllCartItemsLocalStorage } from '../services/localStorage';
 
 export default class Home extends Component {
   state = {
@@ -9,6 +10,7 @@ export default class Home extends Component {
     pesquisar: '',
     list: [],
     selectId: '',
+    quantityItensCart: getAllCartItemsLocalStorage() || [],
   };
 
   async componentDidMount() {
@@ -45,11 +47,12 @@ export default class Home extends Component {
   };
 
   render() {
-    const { category, pesquisar, list } = this.state;
+    const { category, pesquisar, list, quantityItensCart } = this.state;
     return (
       <div>
         <Link to="/shoppingCart" data-testid="shopping-cart-button">
           Carrinho de compras
+          <span data-testid="shopping-cart-size">{quantityItensCart.length }</span>
         </Link>
         <form>
           {category.map((e) => (
@@ -111,6 +114,12 @@ export default class Home extends Component {
                   .parse(localStorage.getItem('cartProduct')) || [];
                 const newCart = [...currentCart, e];
                 localStorage.setItem('cartProduct', JSON.stringify(newCart));
+
+                const allCartProducts = JSON
+                  .parse(localStorage.getItem('allCartProducts')) || [];
+                const newOtherCart = [...allCartProducts, e];
+                localStorage.setItem('allCartProducts', JSON.stringify(newOtherCart));
+                this.setState({ quantityItensCart: getAllCartItemsLocalStorage() });
               } }
             >
               Adicionar ao carrinho
