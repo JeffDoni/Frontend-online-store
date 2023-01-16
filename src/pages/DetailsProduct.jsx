@@ -104,6 +104,8 @@ export default class DetailsProduct extends Component {
             data-testid="product-detail-image"
           />
           <p data-testid="product-detail-price">{productID.price}</p>
+          {productID.shipping.free_shipping === true
+          && <p data-testid="free-shipping">Frete Grátis</p>}
           <button
             type="button"
             data-testid="product-detail-add-to-cart"
