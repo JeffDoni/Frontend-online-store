@@ -99,7 +99,7 @@ export default class Home extends Component {
                 <img src={ e.thumbnail } alt={ e.title } />
                 <p>{e.price}</p>
                 {e.shipping.free_shipping === true
-          && <p data-testid="free-shipping">Frete Grátis</p>}
+          && <p data-testid="free-shipping"> frete grátis</p>}
 
               </div>
             </Link>
