@@ -19,6 +19,7 @@ export default class DetailsProduct extends Component {
     productID: {},
     rate: ['1', '2', '3', '4', '5'],
     quantityItensCart: getAllCartItemsLocalStorage() || [],
+    frete: null,
   };
 
   async componentDidMount() {
@@ -29,6 +30,7 @@ export default class DetailsProduct extends Component {
     this.setState({
       productID: details,
       evaluation: JSON.parse(localStorage.getItem(id) || '[]'),
+      frete: details.shipping.free_shipping,
     });
   }
 
@@ -64,13 +66,14 @@ export default class DetailsProduct extends Component {
       email,
       comment,
       inputChecked,
+      frete,
     } = this.state;
     const { match: { params: { id } } } = this.props;
 
     const recover = JSON.parse(localStorage.getItem(id) || '[]');
 
     localStorage.setItem(`${id}`, JSON
-      .stringify([...recover, { email, comment, inputChecked }]));
+      .stringify([...recover, { email, comment, inputChecked, frete }]));
 
     this.setState({
       evaluation: JSON.parse(localStorage.getItem(id)),
@@ -88,6 +91,7 @@ export default class DetailsProduct extends Component {
       invalidationInfo,
       evaluation,
       quantityItensCart,
+      frete,
     } = this.state;
 
     return (
@@ -104,6 +108,8 @@ export default class DetailsProduct extends Component {
             data-testid="product-detail-image"
           />
           <p data-testid="product-detail-price">{productID.price}</p>
+          {frete === true
+          && <p data-testid="free-shipping"> frete grátis</p>}
           <button
             type="button"
             data-testid="product-detail-add-to-cart"
