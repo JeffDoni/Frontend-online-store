@@ -28,7 +28,7 @@ export default class Checkout extends Component {
           </ul>
         </div>
         <form>
-          <h2>Informações do comprador</h2>
+          <h2>Informações do comprador:</h2>
           <div>
             <input
               type="text"
@@ -67,7 +67,7 @@ export default class Checkout extends Component {
               required
             />
           </div>
-          <h2>Forma de pagamento</h2>
+          <h2>Forma de pagamento:</h2>
           <div>
             <label htmlFor="boleto">
               <input
