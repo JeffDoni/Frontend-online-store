@@ -87,7 +87,7 @@ export default class DetailsProduct extends Component {
       inputChecked,
       invalidationInfo,
       evaluation,
-      quantityItensCart
+      quantityItensCart,
     } = this.state;
 
     return (
