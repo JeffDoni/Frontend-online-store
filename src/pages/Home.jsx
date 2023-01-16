@@ -42,10 +42,6 @@ export default class Home extends Component {
     });
   };
 
-  captureId = (id) => {
-    localStorage.setItem('detailsId', JSON.stringify(id));
-  };
-
   render() {
     const { category, pesquisar, list, quantityItensCart } = this.state;
     return (
@@ -96,8 +92,7 @@ export default class Home extends Component {
           <div key={ e.id }>
             <Link
               data-testid="product-detail-link"
-              to="/detailsProduct"
-              onClick={ () => this.captureId(e.id) }
+              to={ `/detailsProduct/${e.id}` }
             >
               <div data-testid="product">
                 <p>{e.title}</p>
