@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import logo from "../images/logo.png";
+import { BsCart3 } from "react-icons/bs";
 import { getProductById } from '../services/api';
 import { getAllCartItemsLocalStorage } from '../services/localStorage';
 
@@ -95,23 +97,34 @@ export default class DetailsProduct extends Component {
     } = this.state;
 
     return (
-      <div>
-        <Link to="/shoppingCart" data-testid="shopping-cart-button">
-          Carrinho de compras
-          <span data-testid="shopping-cart-size">{quantityItensCart.length }</span>
-        </Link>
-        <div data-testid="product">
-          <p data-testid="product-detail-name">{productID.title}</p>
+      <div className='flex flex-col'>
+        <header className="flex items-center  align-center h-24 bg-[#003BE5] justify-around">
+        <img src={logo} alt="logo" />
+          <Link to="/shoppingCart" data-testid="shopping-cart-button">
+            <BsCart3 className="w-20 h-10 text-slate-50" />
+            <p
+              data-testid="shopping-cart-size"
+              className="bg-[#31c28d] rounded-full h-5 w-5 text-center translate-y-[-3rem] translate-x-[3rem]"
+            >
+              {quantityItensCart.length}
+            </p>
+          </Link>
+        </header>
+        <div data-testid="product" className='container-details'>
+          <p data-testid="product-detail-name" className='title-product'>{productID.title}</p>
           <img
             src={ productID.thumbnail }
             alt={ productID.title }
             data-testid="product-detail-image"
+            className='w-[300px]'
+            
           />
-          <p data-testid="product-detail-price">{productID.price}</p>
+          <p data-testid="product-detail-price">{`R$ ${productID.price}`}</p>
           {frete === true
-          && <p data-testid="free-shipping"> frete grátis</p>}
+          && <p data-testid="free-shipping">Frete grátis</p>}
           <button
             type="button"
+            className='btn'
             data-testid="product-detail-add-to-cart"
             onClick={ () => {
               const currentCart = JSON
@@ -129,9 +142,10 @@ export default class DetailsProduct extends Component {
             Adicionar ao carrinho
           </button>
         </div>
-        <form>
+        <form className='flex flex-col items-center mt-20'>
+          <h1>Avaliações</h1>
+          <fieldset>
           <label htmlFor="email">
-            E-mail
             <input
               type="email"
               id="email"
@@ -139,7 +153,8 @@ export default class DetailsProduct extends Component {
               data-testid="product-detail-email"
               value={ email }
               onChange={ this.onInputChange }
-              placeholder="Digite seu email"
+              placeholder="E-mail"
+              className='border-[1px] border-slate-500 w-[18rem] mb-2'
             />
           </label>
           {rate.map((e, index) => (
@@ -156,14 +171,16 @@ export default class DetailsProduct extends Component {
               />
             </label>
           ))}
+          </fieldset>
           <label htmlFor="comment">
             <textarea
               name="comment"
-              cols="30"
-              rows="10"
+              cols="40"
+              rows="5"
               data-testid="product-detail-evaluation"
               value={ comment }
               onChange={ this.onInputChange }
+              className='border-[1px] border-slate-500'
             />
           </label>
           {!invalidationInfo && <p data-testid="error-msg">Campos inválidos</p>}
@@ -171,6 +188,7 @@ export default class DetailsProduct extends Component {
             type="button"
             data-testid="submit-review-btn"
             onClick={ this.validation }
+            className='btn w-[15rem]'
           >
             Avaliar
 
